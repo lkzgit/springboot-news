@@ -1,0 +1,18 @@
+server:
+  port: 8011
+spring:
+  datasource:
+    # driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&useSSL=false&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+aliyun:
+  sms:
+    accessKeyId: LTAIlbh06z0FzXNs
+    accessKeySecret: Rp04BIrvt2MhWBXuA0mrUk60CvmM73 #创建的accesskey中的Access Key Secret
+    templateCode: SMS_193233223 #模板管理中的模板CODE
+    signName: 小萌萌 #签名管理中的签名
+
+
