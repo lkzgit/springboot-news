@@ -8,11 +8,14 @@ spring:
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
+    redis:
+      host: 127.0.0.1
 aliyun:
   sms:
-    accessKeyId: #创建的accesskey中的Access Key ID
-    accessKeySecret: #创建的accesskey中的Access Key Secret
+    accessKeyId:  #创建的accesskey中的Access Key ID
+    accessKeySecret:  #创建的accesskey中的Access Key Secret
     templateCode: SMS_193233223 #模板管理中的模板CODE
     signName: 小萌萌 #签名管理中的签名
+
 
 

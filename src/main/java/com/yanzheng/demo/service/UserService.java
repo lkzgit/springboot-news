@@ -7,10 +7,14 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserService {
@@ -28,7 +32,10 @@ public class UserService {
     @Value("${aliyun.sms.templateCode}")
     private String templateCode;
 
-   /* public void sendSms(String mobile) {
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    /*public void sendSms(String mobile) {
 
         //生成6位数验证码
         String checkcode = UUID.randomUUID().toString().substring(0,4);
@@ -42,7 +49,7 @@ public class UserService {
 
     }*/
 
-    public boolean sendSms(String iponeNUmber) {
+    public boolean sendSms(String phone) {
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessSecret);
         IAcsClient client = new DefaultAcsClient(profile);
         CommonRequest request = new CommonRequest();
@@ -51,11 +58,12 @@ public class UserService {
         request.setVersion("2017-05-25");
         request.setAction("SendSms");
         request.putQueryParameter("RegionId", "cn-hangzhou");
-        request.putQueryParameter("PhoneNumbers", iponeNUmber);
+        request.putQueryParameter("PhoneNumbers", phone);
         request.putQueryParameter("SignName", signName);
         request.putQueryParameter("TemplateCode", templateCode);
         JSONObject object=new JSONObject();
         String randCode=getRandCode(6);
+        redisTemplate.opsForValue().set(phone,randCode,10, TimeUnit.MINUTES);
         object.put("code",randCode);
         request.putQueryParameter("TemplateParam", object.toJSONString());
         try {
