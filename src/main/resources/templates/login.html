@@ -8,21 +8,22 @@
     function refresh() {
         document.getElementById('captcha_img').src = "/api/getVerifyCode?" + Math.random();
     }
+
     /*提交表单*/
     function setSubmit() {
-       $("#formId").alert()
+        $("#formId").alert()
     }
 </script>
 <body>
-    <form id="formId">
-        姓名:<input value="name" type="text" name="name"><br/>
-        密码:<input value="pass" type="password" name="pass"><br/>
-        请输入验证码:<input type="text" value="textCode" name="textCode">
-        <!--<div>
-            <img id="captcha_img" alt="点击更换" title="点击更换"
-                 onclick="refresh()" src="/api/getVerifyCode"/>
-        </div>-->
-        <input type="button" onclick="setSubmit" value="提交">
-    </form>
+<form id="formId">
+    姓名:<input value="name" type="text" name="name"><br/>
+    密码:<input value="pass" type="password" name="pass"><br/>
+    请输入验证码:<input type="text" value="textCode" name="textCode">
+    <!--<div>
+        <img id="captcha_img" alt="点击更换" title="点击更换"
+             onclick="refresh()" src="/api/getVerifyCode"/>
+    </div>-->
+    <input type="button" onclick="setSubmit" value="提交">
+</form>
 </body>
 </html>

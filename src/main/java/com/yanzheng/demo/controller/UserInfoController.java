@@ -24,13 +24,13 @@ import java.awt.image.BufferedImage;
 public class UserInfoController {
 
 
-    private static final Logger logger= LoggerFactory.getLogger(UserInfoController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserInfoController.class);
     @Autowired
     private DefaultKaptcha captchaProducer;
 
     // 项目启动进入登录界面
-    @RequestMapping(value = "tologin",method = RequestMethod.GET)
-    public String getLogin(){
+    @RequestMapping(value = "tologin", method = RequestMethod.GET)
+    public String getLogin() {
 
         return "login";
     }
@@ -39,36 +39,21 @@ public class UserInfoController {
      * 验证图形吗
      */
     @RequestMapping("xiaodui")
-    public ModelAndView xioadui(HttpServletRequest request,HttpServletResponse response){
-        ModelAndView modelAndView=new ModelAndView();
+    public ModelAndView xioadui(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView modelAndView = new ModelAndView();
         String rightCode = (String) request.getSession().getAttribute("verifyCode");
         String tryCode = request.getParameter("tryCode");
-        System.out.println("rightCode:"+rightCode+"-----tryCode:"+tryCode);
-        if(!rightCode.equals(tryCode)){
-            modelAndView.addObject("info","错误的验证");
+        System.out.println("rightCode:" + rightCode + "-----tryCode:" + tryCode);
+        if (!rightCode.equals(tryCode)) {
+            modelAndView.addObject("info", "错误的验证");
             modelAndView.setViewName("index");
-        }else{
-            modelAndView.addObject("info","验证成功");
+        } else {
+            modelAndView.addObject("info", "验证成功");
             modelAndView.setViewName("success");
         }
         return modelAndView;
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // 把生成的验证码以图片的形式输送到前段页面
@@ -92,20 +77,20 @@ public class UserInfoController {
 
 
     @GetMapping("phoneText")
-    public void captcha(HttpServletResponse response,HttpServletRequest request){
-        try{
-            response.setHeader("Cache-Controller","no-store,no-cache");
+    public void captcha(HttpServletResponse response, HttpServletRequest request) {
+        try {
+            response.setHeader("Cache-Controller", "no-store,no-cache");
             response.setContentType("image/jpeg");
             // 生成文字验证码
             String text = captchaProducer.createText();
             //生成图片验证码
             BufferedImage image = captchaProducer.createImage(text);
             // 保存验证码到session
-            request.getSession().setAttribute("text",text);
+            request.getSession().setAttribute("text", text);
             ServletOutputStream out = response.getOutputStream();
-            ImageIO.write(image,"jpg",out);
+            ImageIO.write(image, "jpg", out);
             IOUtils.closeQuietly(out);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
